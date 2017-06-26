@@ -25,6 +25,7 @@
   <script>
       $('[data-role="doughpie"]').each(function(index) {
           createDoughnut(this);
+          console.log("")
       });
 
 
@@ -81,11 +82,10 @@
           var key = function(d) {
               return d.data.label;
           };
-
+          //this may be useful: http://bl.ocks.org/jfreyre/b1882159636cc9e1283a
           var color = d3.scale.ordinal()
-              .range(["#46a2de", "#7b3cce", "#31d99c", "#de5942", "#ffa618"]);
+              .range(["#46a2de", "#7b3cce", "#31d99c", "#de5942", "#ffa618",]);
           //_create doughpie shell
-
 
           //_create bubble
           var diameter = width / 2; //take half/width
@@ -104,7 +104,7 @@
 
           //_create bubble
 
-
+//TODO: read https://chartio.com/resources/tutorials/how-to-show-data-on-mouseover-in-d3js/
           //guide: value changes the value in outer circle while
           //size is the size of the bubble
           function randomData() {
