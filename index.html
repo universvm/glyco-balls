@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GlycoBalls</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      width: 560px;
+      height: 500px;
+      position: relative;
+      background: #333333;
+    }
+
+    path.slice {
+      stroke-width: 2px;
+    }
+    </style>
+  </head>
+  <body>
+    <button class="randomize">randomize</button>
+    <div data-role="doughpie" data-width="450" data-height="450" id="graph"></div>
+  <script>
+      $('[data-role="doughpie"]').each(function(index) {
+          createDoughnut(this);
+      });
+
+
+      function bubbledata(data) {
+          //loop through data -- and MERGE children
+          var childs = [];
+          $.each(data, function(index, value) {
+              childs.push(value.children);
+          });
+          var merged = [].concat.apply([], childs); //flatterns multidimensional array
+
+          return $.extend(true, {}, {
+              "children": merged
+          }); // return deep clone
+      }
+
+
+      function createDoughnut(el) {
+
+          var width = $(el).data("width"),
+              height = $(el).data("height"),
+              radius = Math.min(width, height) / 2; //Radius of the whole circle
+
+          var svg = d3.select($(el)[0])
+              .append("svg")
+              .attr("width", width)
+              .attr("height", height)
+
+
+
+          //_create doughpie shell
+          var doughpie = svg.append("g")
+              .attr("class", "doughpie");
+
+          doughpie.append("g")
+              .attr("class", "slices");
+          doughpie.append("g")
+              .attr("class", "labels");
+          doughpie.append("g")
+              .attr("class", "lines");
+
+          var pie = d3.layout.pie()
+              .sort(null)
+              .value(function(d) {
+                  return d.value;
+              });
+
+          var arc = d3.svg.arc()
+              .outerRadius(radius * 0.90) //size of the radius of the outer circle
+              .innerRadius(radius * 0.87);
+
+          doughpie.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+          var key = function(d) {
+              return d.data.label;
+          };
+
+          var color = d3.scale.ordinal()
+              .range(["#46a2de", "#7b3cce", "#31d99c", "#de5942", "#ffa618"]);
+          //_create doughpie shell
+
+
+          //_create bubble
+          var diameter = width / 2; //take half/width
+
+          var bubs = svg.append("g")
+              .attr("class", "bubs");
+
+          bubs.attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+          var bubble = d3.layout.pack()
+              .size([diameter, diameter])
+              .value(function(d) {
+                  return d.size;
+              })
+              .padding(3);
+
+          //_create bubble
+
+
+          //guide: value changes the value in outer circle while
+          //size is the size of the bubble
+          function randomData() {
+              var data1 = [{
+                  "label": "Alpha-1-acid glycoprotein",
+                  "value": "0.77",
+                  "children": [{
+                      name: "Description of Alpha-1-acid glycoprotein",
+                      group: "Alpha-1-acid glycoprotein",
+                      size: 0.77,
+                  }]
+              }, {
+                  "label": "Alpha-1-antitrypsin",
+                  "value": "1.1",
+                  "children": [{
+                      name: "Description of Alpha-1-antitrypsin",
+                      group: "Alpha-1-antitrypsin",
+                      size: 1.1,
+                  }]
+              }, {
+                  "label": "Alpha-1B-glycoprotein",
+                  "value": "0.22",
+                  "children": [{
+                      name: "Description of Alpha-1B-glycoprotein",
+                      group: "Alpha-1B-glycoprotein",
+                      size: 0.22,
+                  }]
+              }, {
+                  "label": "Alpha-2-HS-glycoprotein",
+                  "value": "0.45",
+                  "children": [{
+                      name: "Description of Alpha-2-HS-glycoprotein",
+                      group: "Alpha-2-HS-glycoprotein",
+                      size: 0.45,
+                  }]
+              }, {
+                  "label": "Alpha-2-macrogobulin",
+                  "value": "1.2",
+                  "children": [{
+                      name: "Description of Alpha-2-macrogobulin",
+                      group: "Alpha-2-macrogobulin",
+                      size: 1.2,
+                  }]
+              }, {
+                  "label": "Antithrombin-III",
+                  "value": "0.15",
+                  "children": [{
+                      name: "Description of Antithrombin-III",
+                      group: "Antithrombin-III",
+                      size: 0.15,
+                  }]
+              }, {
+                  "label": "Apolipoprotein B-100",
+                  "value": "0.5",
+                  "children": [{
+                      name: "Description of Apolipoprotein B-100",
+                      group: "Apolipoprotein B-100",
+                      size: 0.5,
+                  }]
+              }, {
+                  "label": "Apolipoprotein D",
+                  "value": "0.1",
+                  "children": [{
+                      name: "Description of Apolipoprotein D",
+                      group: "Apolipoprotein D",
+                      size: 0.1,
+                  }]
+              }, {
+                  "label": "Apolipoprotein F",
+                  "value": "0.0845",
+                  "children": [{
+                      name: "Description of Apolipoprotein F",
+                      group: "Apolipoprotein F",
+                      size: 0.0845,
+                  }]
+              }, {
+                  "label": "Beta-2-glycoprotein 1",
+                  "value": "0.2",
+                  "children": [{
+                      name: "Description of Beta-2-glycoprotein 1",
+                      group: "Beta-2-glycoprotein 1",
+                      size: 0.2,
+                  }]
+              }, {
+                  "label": "Ceruloplasmin",
+                  "value": "0.355",
+                  "children": [{
+                      name: "Description of Ceruloplasmin",
+                      group: "Ceruloplasmin",
+                      size: 0.355,
+                  }]
+              }, {
+                  "label": "Fibrinogen",
+                  "value": "3",
+                  "children": [{
+                      name: "Description of Fibrinogen",
+                      group: "Fibrinogen",
+                      size: 3,
+                  }]
+              }, {
+                  "label": "Haptoglobin",
+                  "value": "1.32",
+                  "children": [{
+                      name: "Description of Haptoglobin",
+                      group: "Haptoglobin",
+                      size: 1.32,
+                  }]
+              }, {
+                  "label": "Hemopexin",
+                  "value": "0.8",
+                  "children": [{
+                      name: "Description of Hemopexin",
+                      group: "Hemopexin",
+                      size: 0.8,
+                  }]
+              }, {
+                  "label": "Histdine-rich glycoprotein",
+                  "value": "0.125",
+                  "children": [{
+                      name: "Description of Histdine-rich glycoprotein",
+                      group: "Histdine-rich glycoprotein",
+                      size: 0.125,
+                  }]
+              }, {
+                  "label": "Kininogen-1",
+                  "value": "0.0725",
+                  "children": [{
+                      name: "Description of Kininogen-1",
+                      group: "Kininogen-1",
+                      size: 0.0725,
+                  }]
+              }, {
+                  "label": "Seroransferrin",
+                  "value": "2.5",
+                  "children": [{
+                      name: "Description of Seroransferrin",
+                      group: "Seroransferrin",
+                      size: 2.5,
+                  }]
+              }, {
+                  "label": "Vitronectin",
+                  "value": "0.3",
+                  "children": [{
+                      name: "Description of Vitronectin",
+                      group: "Vitronectin",
+                      size: 0.3,
+                  }]
+              }, {
+                  "label": "Zinc-alpha-2-glycoprotein",
+                  "value": "0.05",
+                  "children": [{
+                      name: "Description of Zinc-alpha-2-glycoprotein",
+                      group: "Zinc-alpha-2-glycoprotein",
+                      size: 0.05,
+                  }]
+              }, {
+                  "label": "Immunoglobulin A",
+                  "value": "2.62",
+                  "children": [{
+                      name: "Description of Immunoglobulin A",
+                      group: "Immunoglobulin A",
+                      size: 2.62,
+                  }]
+              }, {
+                  "label": "Immunoglobulin D",
+                  "value": "0.035",
+                  "children": [{
+                      name: "Description of Immunoglobulin D",
+                      group: "Immunoglobulin D",
+                      size: 0.035,
+                  }]
+              }, {
+                  "label": "Immunoglobulin E",
+                  "value": "0.0003",
+                  "children": [{
+                      name: "Description of Immunoglobulin E",
+                      group: "Immunoglobulin E",
+                      size: 0.0003,
+                  }]
+              }, {
+                  "label": "Immunoglobulin G",
+                  "value": "11.8",
+                  "children": [{
+                      name: "Description of Immunoglobulin G",
+                      group: "Immunoglobulin G",
+                      size: 11.8,
+                  }]
+              }, {
+                  "label": "Immunoglobulin M",
+                  "value": "1.47",
+                  "children": [{
+                      name: "Description of Immunoglobulin M",
+                      group: "Immunoglobulin M",
+                      size: 1.47,
+                  }]
+              }];
+
+              var data23 = [{
+                  "label": "AA",
+                  "value": 0.243879179,
+                  "children": [{
+                      name: "some text aa",
+                      group: "AA",
+                      size: 120
+                  }]
+              }, {
+                  "label": "BB",
+                  "value": 0.243879179,
+                  "children": [{
+                      name: "some text bb",
+                      group: "BB",
+                      size: 23
+                  }]
+              }, {
+                  "label": "CC",
+                  "value": 0.2342439557273275,
+                  "children": [{
+                      name: "some text cc",
+                      group: "CC",
+                      size: 34
+                  }]
+              }, {
+                  "label": "DD",
+                  "value": 0.2349535612,
+                  "children": [{
+                      name: "some text dd",
+                      group: "DD",
+                      size: 45
+                  }, {
+                      name: "some text dd",
+                      group: "DD",
+                      size: 3349
+                  }]
+              }, {
+                  "label": "EE",
+                  "value": 0.2345780517,
+                  "children": [{
+                      name: "some text ee",
+                      group: "EE",
+                      size: 435
+                  }, {
+                      name: "some text ee",
+                      group: "EE",
+                      size: 3453
+                  }]
+              }];
+
+              var j = Math.floor((Math.random() * 2) + 1);
+
+              if (j == 1) {
+                  return data1;
+              } else {
+                  return data2;
+              }
+          }
+
+
+          change(randomData());
+
+          d3.select(".randomize")
+              .on("click", function() {
+                  change(randomData());
+              });
+
+          function change(data) {
+
+
+            /* ------- ANIMATE PIE SLICES -------*/
+              var slice = doughpie.select(".slices").selectAll("path.slice")
+                  .data(pie(data), key);
+
+
+              slice.enter()
+                  .insert("path")
+                  .style("fill", function(d) {
+                      return color(d.data.label);
+                  })
+                  .attr("class", "slice");
+
+
+              slice
+                  .transition().duration(1000)
+                  .attrTween("d", function(d) {
+                      this._current = this._current || d;
+
+                      var interpolate = d3.interpolate(this._current, d);
+                      this._current = interpolate(0);
+                      return function(t) {
+                          return arc(interpolate(t));
+                      };
+                  })
+
+              slice.exit()
+                  .remove();
+            /* ------- ANIMATE BUBBLES -------*/
+
+
+              // generate data with calculated layout values
+
+              var data = bubbledata(data);
+              //console.log("bub d", data);
+
+              var nodes = bubble.nodes(data)
+                  .filter(function(d) {
+                      return !d.children;
+                  }); // filter out the outer bubble
+
+              console.log("nodes", nodes);
+
+              var bubbles = bubs.selectAll('circle')
+                  .data(nodes);
+
+              bubbles.enter()
+                  .insert("circle")
+                  .attr('transform', function(d) {
+                      return 'translate(' + d.x + ',' + d.y + ')';
+                  })
+                  .attr('r', function(d) {
+                      //console.log("dr", d.r)
+                      return d.r;
+                  })
+                  .style("fill", function(d) {
+                      return color(d.group);
+                  });
+
+
+              bubbles = bubbles.transition()
+                  .transition()
+                  .duration(400)
+                  .attr('transform', function(d) {
+                      return 'translate(' + d.x + ',' + d.y + ')';
+                  })
+                  .attr('stroke-width', 0.5)
+                  .attr('r', function(d) {
+                      //console.log("dr", d.r)
+                      return d.r;
+                  })
+                  .ease('sine')
+
+              bubbles
+                  .transition().duration(1000)
+
+            /*
+             bubbles.exit()
+             .remove();
+             */
+
+            /* ------- ANIMATE BUBBLES -------*/
+
+          };
+      }
+  </script>
+  </body>
+</html>
