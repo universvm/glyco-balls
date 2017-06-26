@@ -5,6 +5,8 @@
     <title>GlycoBalls</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.13.0/d3-legend.js"></script>
+
     <style>
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -25,7 +27,6 @@
   <script>
       $('[data-role="doughpie"]').each(function(index) {
           createDoughnut(this);
-          console.log("")
       });
 
 
@@ -84,7 +85,7 @@
           };
           //this may be useful: http://bl.ocks.org/jfreyre/b1882159636cc9e1283a
           var color = d3.scale.ordinal()
-              .range(["#46a2de", "#7b3cce", "#31d99c", "#de5942", "#ffa618",]);
+              .range(["#46a2de", "#7b3cce", "#31d99c", "#de5942", "#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618","#ffa618",]);
           //_create doughpie shell
 
           //_create bubble
@@ -202,7 +203,8 @@
                   "children": [{
                       name: "Description of Fibrinogen",
                       group: "Fibrinogen",
-                      size: 3,
+                      size: 3
+                      ,
                   }]
               }, {
                   "label": "Haptoglobin",
@@ -360,6 +362,7 @@
                   return data2;
               }
           }
+          console.log(d3.legend)
 
 
           change(randomData());
@@ -409,6 +412,7 @@
 
               var nodes = bubble.nodes(data)
                   .filter(function(d) {
+                      console.log(d.children)
                       return !d.children;
                   }); // filter out the outer bubble
 
