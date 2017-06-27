@@ -50,8 +50,8 @@
 
           var svg = d3.select($(el)[0])
               .append("svg")
-              .attr("width", width)
-              .attr("height", height);
+              .attr("width", width + 100)
+              .attr("height", height + 100);
 
           var tooltip = d3.select("body")
               .append("div")
@@ -377,13 +377,9 @@
                   .style("fill", function(d) {
                       return color(d.group);
                   })
-
-                  //                  .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-//                  .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-//                  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
                   .on("mouseover", function(d) {
                       console.log(d);
-                      console.log(d.value)
+                      console.log(d.value);
                       tooltip.text(d.group + ": " + d.value.toPrecision(2).toString() + " mg/ml");
                       tooltip.style("visibility", "visible");
                   })
@@ -391,6 +387,28 @@
                       return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
                   })
                   .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+              var legend = svg.append("g")
+                  .attr("class", "legend")
+                  .selectAll("g")
+                  //console.log(nodes.group())
+                  .data(nodes)
+                  .enter()
+                  .append("g")
+                  .attr("transform", function(d,i){
+                      return "translate(" + d.depth*500 + "," + i*20 + ")";
+                  });
+              // Draw rects, and color them by original_index
+              legend.append("rect")
+                  .attr("width", 8)
+                  .attr("height", 8)
+                  .style("fill", function(d){return color(d.data.label)});
+
+              legend.append("text")
+                  .attr("x", function(d,i){ return d.depth*10 +10;})
+                  .attr("dy", "0.50em")
+                  .text(function(d){return d.group;});
+              console.log(legend);
 
               bubbles = bubbles.transition()
                   .transition()
