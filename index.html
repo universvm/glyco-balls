@@ -54,7 +54,17 @@
               .attr("width", width)
               .attr("height", height)
 
-
+          var tooltip = d3.select("body")
+              .append("div")
+              .style("position", "absolute")
+              .style("z-index", "10")
+              .style("visibility", "hidden")
+              .style("color", "white")
+              .style("padding", "8px")
+              .style("background-color", "rgba(0, 0, 0, 0.75)")
+              .style("border-radius", "6px")
+              .style("font", "12px sans-serif")
+              .text("tooltip");
 
           //_create doughpie shell
           var doughpie = svg.append("g")
@@ -107,7 +117,7 @@
 //TODO: read https://chartio.com/resources/tutorials/how-to-show-data-on-mouseover-in-d3js/
           //guide: value changes the value in outer circle while
           //size is the size of the bubble
-          function randomData() {
+          //function randomData() {
               var data1 = [{
                   "label": "Alpha-1-acid glycoprotein",
                   "value": "0.77",
@@ -303,73 +313,12 @@
                   }]
               }];
 
-              var data23 = [{
-                  "label": "AA",
-                  "value": 0.243879179,
-                  "children": [{
-                      name: "some text aa",
-                      group: "AA",
-                      size: 120
-                  }]
-              }, {
-                  "label": "BB",
-                  "value": 0.243879179,
-                  "children": [{
-                      name: "some text bb",
-                      group: "BB",
-                      size: 23
-                  }]
-              }, {
-                  "label": "CC",
-                  "value": 0.2342439557273275,
-                  "children": [{
-                      name: "some text cc",
-                      group: "CC",
-                      size: 34
-                  }]
-              }, {
-                  "label": "DD",
-                  "value": 0.2349535612,
-                  "children": [{
-                      name: "some text dd",
-                      group: "DD",
-                      size: 45
-                  }, {
-                      name: "some text dd",
-                      group: "DD",
-                      size: 3349
-                  }]
-              }, {
-                  "label": "EE",
-                  "value": 0.2345780517,
-                  "children": [{
-                      name: "some text ee",
-                      group: "EE",
-                      size: 435
-                  }, {
-                      name: "some text ee",
-                      group: "EE",
-                      size: 3453
-                  }]
-              }];
+              //return data1;
 
-              var j = Math.floor((Math.random() * 2) + 1);
+          //}
 
-              if (j == 1) {
-                  return data1;
-              } else {
-                  return data2;
-              }
-          }
-          console.log(d3.legend)
+          change(data1);
 
-
-          change(randomData());
-
-          d3.select(".randomize")
-              .on("click", function() {
-                  change(randomData());
-              });
 
           function change(data) {
 
@@ -382,7 +331,9 @@
               slice.enter()
                   .insert("path")
                   .style("fill", function(d) {
-                      return color(d.data.label);
+                      console.log(d.data.label);
+                      console.log(color(d.data.label));
+                      return color(d.data.label); //colors
                   })
                   .attr("class", "slice");
 
@@ -397,7 +348,7 @@
                       return function(t) {
                           return arc(interpolate(t));
                       };
-                  })
+                  });
 
               slice.exit()
                   .remove();
@@ -407,11 +358,10 @@
               // generate data with calculated layout values
 
               var data = bubbledata(data);
-              //console.log("bub d", data);
 
               var nodes = bubble.nodes(data)
                   .filter(function(d) {
-                      console.log(d.children)
+                      console.log(d.children);
                       return !d.children;
                   }); // filter out the outer bubble
 
@@ -431,8 +381,20 @@
                   })
                   .style("fill", function(d) {
                       return color(d.group);
-                  });
-
+                  })
+//                  .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+//                  .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+//                  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+                  .on("mouseover", function(d) {
+                      console.log(d);
+                      console.log(d.value)
+                      tooltip.text(d.group + ": " + d.value.toPrecision(2).toString() + "%");
+                      tooltip.style("visibility", "visible");
+                  })
+                  .on("mousemove", function() {
+                      return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                  })
+                  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
               bubbles = bubbles.transition()
                   .transition()
@@ -445,17 +407,10 @@
                       //console.log("dr", d.r)
                       return d.r;
                   })
-                  .ease('sine')
+                  .ease('sine');
 
               bubbles
                   .transition().duration(1000)
-
-            /*
-             bubbles.exit()
-             .remove();
-             */
-
-            /* ------- ANIMATE BUBBLES -------*/
 
           };
       }
