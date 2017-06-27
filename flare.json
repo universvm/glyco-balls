@@ -1,0 +1,29 @@
+{
+  "name": "flare",
+  "children": [
+    {"name":"Alpha-1-acid glycoprotein" ,"size":"2.634973975"},
+    {"name":"Alpha-1-antitrypsin" ,"size":"3.764248536"},
+    {"name":"Alpha-1B-glycoprotein" ,"size":"0.752908966"},
+    {"name":"Alpha-2-HS-glycoprotein" ,"size":"1.540041068"},
+    {"name":"Alpha-2-macrogobulin" ,"size":"4.106776181"},
+    {"name":"Antithrombin-III" ,"size":"0.513347023"},
+    {"name":"Apolipoprotein B-100" ,"size":"1.711156742"},
+    {"name":"Apolipoprotein D" ,"size":"0.342231348"},
+    {"name":"Apolipoprotein F" ,"size":"0.289185489"},
+    {"name":"Beta-2-glycoprotein 1" ,"size":"0.684462697"},
+    {"name":"Ceruloplasmin" ,"size":"1.214921287"},
+    {"name":"Fibrinogen" ,"size":"10.26694045"},
+    {"name":"Haptoglobin" ,"size":"4.517453799"},
+    {"name":"Hemopexin" ,"size":"2.737850787"},
+    {"name":"Histdine-rich glycoprotein" ,"size":"0.427789185"},
+    {"name":"Kininogen-1" ,"size":"0.248117728"},
+    {"name":"Serotransferrin" ,"size":"8.55578371"},
+    {"name":"Vitronectin" ,"size":"1.026694045"},
+    {"name":"Zinc-alpha-2-glycoprotein" ,"size":"0.171115674"},
+    {"name":"Immunoglobulin A" ,"size":"8.966461328"},
+    {"name":"Immunoglobulin D" ,"size":"0.119780972"},
+    {"name":"Immunoglobulin E" ,"size":"0.001026694"},
+    {"name":"Immunoglobulin G" ,"size":"40.38329911"},
+    {"name":"Immunoglobulin M" ,"size":"5.030800821"}
+  ]
+}
