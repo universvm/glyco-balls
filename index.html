@@ -50,8 +50,8 @@
 
           var svg = d3.select($(el)[0])
               .append("svg")
-              .attr("width", width + 100)
-              .attr("height", height + 100);
+              .attr("width", width + 300)
+              .attr("height", height + 150);
 
           var tooltip = d3.select("body")
               .append("div")
@@ -380,6 +380,7 @@
                   .on("mouseover", function(d) {
                       console.log(d);
                       console.log(d.value);
+//                      current = d.value;
                       tooltip.text(d.group + ": " + d.value.toPrecision(2).toString() + " mg/ml");
                       tooltip.style("visibility", "visible");
                   })
@@ -387,9 +388,11 @@
                       return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
                   })
                   .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
-
+//              console.log("Display nodes");
+//              console.log(nodes);
               var legend = svg.append("g")
                   .attr("class", "legend")
+                  .attr("transform", "translate(0,10)")
                   .selectAll("g")
                   //console.log(nodes.group())
                   .data(nodes)
@@ -402,7 +405,7 @@
               legend.append("rect")
                   .attr("width", 8)
                   .attr("height", 8)
-                  .style("fill", function(d){return color(d.data.label)});
+                  .style("fill", function(d){return color(d.group)});
 
               legend.append("text")
                   .attr("x", function(d,i){ return d.depth*10 +10;})
