@@ -8,6 +8,8 @@
             }
         </style>
         <h2>Hello [[prop1]]!</h2>
+        <div data-role="doughpie" data-width="450" data-height="450" id="graph"></div>
+
     </template>
 
     <script>
@@ -25,16 +27,17 @@
                 return {
                     prop1: {
                         type: String,
-                        value: 'glyco-balls',
-                        observer: 'createDoughnut'
+                        value: 'glyco-balls'
                     }
                 };
             }
-//            $('[data-role="doughpie"]').each(function(index) {
-//            createDoughnut(this);
-//        });
+            ready() {
+//            var helloDiv = Polymer.dom(this.root).querySelector('.graph');
+//            $(helloDiv).each(function(index) {
+//                    createDoughnut(this);
+//                });
 
-            bubbledata(data) {
+            function bubbledata (data) {
             //loop through data -- and MERGE children
             var childs = [];
             $.each(data, function(index, value) {
@@ -46,7 +49,7 @@
                 "children": merged
             }); // return deep clone
         }
-            createDoughnut(el) {
+            function createDoughnut(el) {
 
             var width = $(el).data("width"),
                 height = $(el).data("height"),
@@ -435,6 +438,7 @@
 
             }
             }
+        }
         }
 
         window.customElements.define(GlycoBalls.is, GlycoBalls);
