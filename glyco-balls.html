@@ -7,7 +7,7 @@
                 display: block;
             }
         </style>
-        <h2>Hello [[prop1]]!</h2>
+        <h2>Glyco-Balls!</h2>
         <div data-role="doughpie" data-width="450" data-height="450" id="graph"></div>
 
     </template>
@@ -25,22 +25,29 @@
             static get is() { return 'glyco-balls'; }
             static get properties() {
                 return {
-                    prop1: {
+                    inputData: {
                         type: String,
-                        value: 'glyco-balls',
-                        observer: "super"
+                        observer: "inputDataChanged"
                     }
 
                 };
             }
-            super() {
-//                var asd = "ms";
-//                console.log(asd);
-                $('[data-role="doughpie"]').each(function (index) {
-                    createDoughnut(this);
-                });
+            inputDataChanged() {
+                console.log("H");
 
 
+                /*               var asd = "ms";
+                //                console.log(asd);
+                            var helloDiv = Polymer.dom(this.root).querySelector('.doughpie');
+                            this.$.graph
+                            this.$(helloDiv).each(function(index) {
+                                    createDoughnut(this);
+                                });
+
+                //                $('[data-role="doughpie"]').each(function (index) {
+                //                    createDoughnut(this);
+                //                });*/
+                console.log(Polymer.dom(this.root).querySelector(this.$.graph));
                 function bubbledata(data) {
                     //loop through data -- and MERGE children
                     var childs = [];
@@ -60,7 +67,7 @@
                         height = $(el).data("height"),
                         radius = Math.min(width, height) / 2; //Radius of the whole circle
 
-                    var svg = d3.select($(el)[0])
+                    var svg = d3.select($(el))
                         .append("svg")
                         .attr("width", width + 300)
                         .attr("height", height + 150);
@@ -452,12 +459,6 @@
                     }
                 }
 
-                //            var helloDiv2 = "ms";
-//            var helloDiv = Polymer.dom(this.root);
-//            .querySelector('this.graph');
-//            $(helloDiv).each(function(index) {
-//                    createDoughnut(this);
-//                });
             }
         }
 
