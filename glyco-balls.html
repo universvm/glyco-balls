@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="glyco-balls">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `glyco-balls`
+     * Glycan balls to display concentration of glycans in glycoproteins.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class GlycoBalls extends Polymer.Element {
+      static get is() { return 'glyco-balls'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'glyco-balls'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(GlycoBalls.is, GlycoBalls);
+  </script>
+</dom-module>
