@@ -1,0 +1,97 @@
+[
+  {
+     "label":"Alpha-1-acid glycoprotein"
+    ,"value":"2.634973975"
+  },
+  {
+     "label":"Alpha-1-antitrypsin"
+    ,"value":"3.764248536"
+  },
+  {
+     "label":"Alpha-1B-glycoprotein"
+    ,"value":"0.752908966"
+  },
+  {
+     "label":"Alpha-2-HS-glycoprotein"
+    ,"value":"1.540041068"
+  },
+  {
+     "label":"Alpha-2-macrogobulin"
+    ,"value":"4.106776181"
+  },
+  {
+     "label":"Antithrombin-III"
+    ,"value":"0.513347023"
+  },
+  {
+     "label":"Apolipoprotein B-100"
+    ,"value":"1.711156742"
+  },
+  {
+     "label":"Apolipoprotein D"
+    ,"value":"0.342231348"
+  },
+  {
+     "label":"Apolipoprotein F"
+    ,"value":"0.289185489"
+  },
+  {
+     "label":"Beta-2-glycoprotein 1"
+    ,"value":"0.684462697"
+  },
+  {
+     "label":"Ceruloplasmin"
+    ,"value":"1.214921287"
+  },
+  {
+     "label":"Fibrinogen"
+    ,"value":"10.26694045"
+  },
+  {
+     "label":"Haptoglobin"
+    ,"value":"4.517453799"
+  },
+  {
+     "label":"Hemopexin"
+    ,"value":"2.737850787"
+  },
+  {
+     "label":"Histdine-rich glycoprotein"
+    ,"value":"0.427789185"
+  },
+  {
+     "label":"Kininogen-1"
+    ,"value":"0.248117728"
+  },
+  {
+     "label":"Serotransferrin"
+    ,"value":"8.55578371"
+  },
+  {
+     "label":"Vitronectin"
+    ,"value":"1.026694045"
+  },
+  {
+     "label":"Zinc-alpha-2-glycoprotein"
+    ,"value":"0.171115674"
+  },
+  {
+     "label":"Immunoglobulin A"
+    ,"value":"8.966461328"
+  },
+  {
+     "label":"Immunoglobulin D"
+    ,"value":"0.119780972"
+  },
+  {
+     "label":"Immunoglobulin E"
+    ,"value":"0.001026694"
+  },
+  {
+     "label":"Immunoglobulin G"
+    ,"value":"40.38329911"
+  },
+  {
+     "label":"Immunoglobulin M"
+    ,"value":"5.030800821"
+  }]

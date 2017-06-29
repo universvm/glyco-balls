@@ -14,11 +14,12 @@
             }
         </style>
         <iron-ajax
-                auto
-                url="data.json"
-                handle-as="json"
-                on-response="handleResponse"
-                debounce-duration="300"></iron-ajax>
+        auto
+        url="data.json"
+        handle-as="json"
+        method="GET"
+        on-response="inputDataChanged"></iron-ajax>
+
         <h2 id="graph">Glyco-Balls!</h2>
         <div data-role="doughpie" data-width="450" data-height="450" id="graph"></div>
     </template>
@@ -42,7 +43,7 @@
 
                 };
             }
-            inputDataChanged() {
+            inputDataChanged(jsonData) {
                 var graph = this.$.graph;
 
                 /*
@@ -138,7 +139,9 @@
                         .padding(3);
 
                     //_create bubble
-                    var data1 = [{
+                    //console.log(jsonData.detail.response);
+                    var data1 = jsonData.detail.response;
+                    var data13 = [{
                         "label": "Alpha-1-acid glycoprotein",
                         "value": "0.77",
                         "children": [{
