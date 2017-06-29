@@ -1,17 +1,19 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <dom-module id="glyco-balls">
+
     <template>
         <style>
             :host {
                 display: block;
             }
         </style>
-        <h2>Glyco-Balls!</h2>
+        <h2 id="graph">Glyco-Balls!</h2>
         <div data-role="doughpie" data-width="450" data-height="450" id="graph"></div>
-
     </template>
-
     <script>
         /**
          * `glyco-balls`
@@ -33,8 +35,7 @@
                 };
             }
             inputDataChanged() {
-                console.log("H");
-
+                var graph = this.$.graph;
 
                 /*
                             var helloDiv = Polymer.dom(this.root).querySelector('.doughpie');
@@ -43,32 +44,27 @@
                                     createDoughnut(this);
                                 });
 
-                //                $('[data-role="doughpie"]').each(function (index) {
-                //                    createDoughnut(this);
-                //                });*/
+                               $('[data-role="doughpie"]').each(function (index) {
+                                   createDoughnut(this);
+                               });*/
 
-                //Polymer.dom(this.root).querySelector(this.$.graph);
+                /*$('[data-role="doughpie"]').each(function (index) {
+                    console.log("s");
+                    console.log(this);
+                    createDoughnut(this);
+                });*/
+                //console.log(Polymer.dom(this.root).querySelector(this))
+                // var $ = Polymer.dom(this.root).querySelector(this.graph);
+                // $.forEach(function(element) {
+                //     console.log(element);
+                // });
 
-                function bubbledata(data) {
-                    //loop through data -- and MERGE children
-                    var childs = [];
-                    $.each(data, function (index, value) {
-                        childs.push(value.children);
-                    });
-                    var merged = [].concat.apply([], childs); //flatterns multidimensional array
-
-                    return $.extend(true, {}, {
-                        "children": merged
-                    }); // return deep clone
-                }
-
-                function createDoughnut(el) {
-
-                    var width = $(el).data("width"),
-                        height = $(el).data("height"),
+                    var width = 450,
+                        height = 450,
                         radius = Math.min(width, height) / 2; //Radius of the whole circle
 
-                    var svg = d3.select($(el))
+
+                    var svg = d3.select(graph)
                         .append("svg")
                         .attr("width", width + 300)
                         .attr("height", height + 150);
@@ -87,6 +83,7 @@
 
                     //_create doughpie shell
                     var doughpie = svg.append("g")
+                        .attr("id", "doughpie")
                         .attr("class", "doughpie");
 
                     doughpie.append("g")
@@ -334,133 +331,148 @@
 
                     change(data1);
 
+                 function change(data) {
 
-                    function change(data) {
-
-
-                        /* ------- ANIMATE PIE SLICES -------*/
-                        var slice = doughpie.select(".slices").selectAll("path.slice")
-                            .data(pie(data), key);
+                    /* ------- ANIMATE PIE SLICES -------*/
+                    var slice = doughpie.select(".slices").selectAll("path.slice")
+                        .data(pie(data), key);
 
 
-                        slice.enter()
-                            .insert("path")
-                            .style("fill", function (d) {
-                                console.log(d.data.label);
-                                console.log(color(d.data.label));
-                                return color(d.data.label); //colors
-                            })
-                            .attr("class", "slice");
+                    slice.enter()
+                        .insert("path")
+                        .style("fill", function (d) {
+                            console.log(d.data.label);
+                            console.log(color(d.data.label));
+                            return color(d.data.label); //colors
+                        })
+                        .attr("class", "slice");
 
 
-                        slice
-                            .transition().duration(1000)
-                            .attrTween("d", function (d) {
-                                this._current = this._current || d;
+                    slice
+                        .transition().duration(1000)
+                        .attrTween("d", function (d) {
+                            this._current = this._current || d;
 
-                                var interpolate = d3.interpolate(this._current, d);
-                                this._current = interpolate(0);
-                                return function (t) {
-                                    return arc(interpolate(t));
-                                };
-                            });
+                            var interpolate = d3.interpolate(this._current, d);
+                            this._current = interpolate(0);
+                            return function (t) {
+                                return arc(interpolate(t));
+                            };
+                        });
 
-                        slice.exit()
-                            .remove();
-                        /* ------- ANIMATE BUBBLES -------*/
+                    slice.exit()
+                        .remove();
+                    /* ------- ANIMATE BUBBLES -------*/
 
 
-                        // generate data with calculated layout values
+                    // generate data with calculated layout values
 
-                        var data = bubbledata(data);
+                    var data = bubbledata(data);
 
-                        var nodes = bubble.nodes(data)
-                            .filter(function (d) {
-                                console.log(d.children);
-                                return !d.children;
-                            }); // filter out the outer bubble
+                    var nodes = bubble.nodes(data)
+                        .filter(function (d) {
+                            console.log(d.children);
+                            return !d.children;
+                        }); // filter out the outer bubble
 
-                        console.log("nodes", nodes);
+                    console.log("nodes", nodes);
 
-                        var bubbles = bubs.selectAll('circle')
-                            .data(nodes);
+                    var bubbles = bubs.selectAll('circle')
+                        .data(nodes);
 
-                        bubbles.enter()
-                            .insert("circle")
-                            .attr('transform', function (d) {
-                                return 'translate(' + d.x + ',' + d.y + ')';
-                            })
-                            .attr('r', function (d) {
-                                //console.log("dr", d.r)
-                                return d.r;
-                            })
-                            .style("fill", function (d) {
-                                return color(d.group);
-                            })
-                            .on("mouseover", function (d) {
-                                console.log(d);
-                                console.log(d.value);
+                    bubbles.enter()
+                        .insert("circle")
+                        .attr('transform', function (d) {
+                            return 'translate(' + d.x + ',' + d.y + ')';
+                        })
+                        .attr('r', function (d) {
+                            //console.log("dr", d.r)
+                            return d.r;
+                        })
+                        .style("fill", function (d) {
+                            return color(d.group);
+                        })
+                        .on("mouseover", function (d) {
+                            console.log(d);
+                            console.log(d.value);
 //                      current = d.value;
-                                tooltip.text(d.group + ": " + d.value.toPrecision(2).toString() + " mg/ml");
-                                tooltip.style("visibility", "visible");
-                            })
-                            .on("mousemove", function () {
-                                return tooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
-                            })
-                            .on("mouseout", function () {
-                                return tooltip.style("visibility", "hidden");
-                            });
+                            tooltip.text(d.group + ": " + d.value.toPrecision(2).toString() + " mg/ml");
+                            tooltip.style("visibility", "visible");
+                        })
+                        .on("mousemove", function () {
+                            return tooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
+                        })
+                        .on("mouseout", function () {
+                            return tooltip.style("visibility", "hidden");
+                        });
 //              console.log("Display nodes");
 //              console.log(nodes);
-                        var legend = svg.append("g")
-                            .attr("class", "legend")
-                            .attr("transform", "translate(0,10)")
-                            .selectAll("g")
-                            //console.log(nodes.group())
-                            .data(nodes)
-                            .enter()
-                            .append("g")
-                            .attr("transform", function (d, i) {
-                                return "translate(" + d.depth * 500 + "," + i * 20 + ")";
-                            });
-                        // Draw rects, and color them by original_index
-                        legend.append("rect")
-                            .attr("width", 8)
-                            .attr("height", 8)
-                            .style("fill", function (d) {
-                                return color(d.group)
-                            });
+                    var legend = svg.append("g")
+                        .attr("class", "legend")
+                        .attr("transform", "translate(0,10)")
+                        .selectAll("g")
+                        //console.log(nodes.group())
+                        .data(nodes)
+                        .enter()
+                        .append("g")
+                        .attr("transform", function (d, i) {
+                            return "translate(" + d.depth * 500 + "," + i * 20 + ")";
+                        });
+                    // Draw rects, and color them by original_index
+                    legend.append("rect")
+                        .attr("width", 8)
+                        .attr("height", 8)
+                        .style("fill", function (d) {
+                            return color(d.group)
+                        });
 
-                        legend.append("text")
-                            .attr("x", function (d, i) {
-                                return d.depth * 10 + 10;
-                            })
-                            .attr("dy", "0.50em")
-                            .text(function (d) {
-                                return d.group;
-                            });
-                        console.log(legend);
+                    legend.append("text")
+                        .attr("x", function (d, i) {
+                            return d.depth * 10 + 10;
+                        })
+                        .attr("dy", "0.50em")
+                        .text(function (d) {
+                            return d.group;
+                        });
+                    console.log(legend);
 
-                        bubbles = bubbles.transition()
-                            .transition()
-                            .duration(400)
-                            .attr('transform', function (d) {
-                                return 'translate(' + d.x + ',' + d.y + ')';
-                            })
-                            .attr('stroke-width', 0.5)
-                            .attr('r', function (d) {
-                                //console.log("dr", d.r)
-                                return d.r;
-                            })
-                            .ease('sine');
+                    bubbles = bubbles.transition()
+                        .transition()
+                        .duration(400)
+                        .attr('transform', function (d) {
+                            return 'translate(' + d.x + ',' + d.y + ')';
+                        })
+                        .attr('stroke-width', 0.5)
+                        .attr('r', function (d) {
+                            //console.log("dr", d.r)
+                            return d.r;
+                        })
+                        .ease('sine');
 
-                        bubbles
-                            .transition().duration(1000)
+                    bubbles
+                        .transition().duration(1000)
 
-                    }
+                }
+
+                function bubbledata(data) {
+                    //loop through data -- and MERGE children
+                    var childs = [];
+                    $.each(data, function (index, value) {
+                        childs.push(value.children);
+                    });
+                    var merged = [].concat.apply([], childs); //flatterns multidimensional array
+
+                    return $.extend(true, {}, {
+                        "children": merged
+                    }); // return deep clone
+
+
                 }
 
             }
+
+
+
         }
 
         window.customElements.define(GlycoBalls.is, GlycoBalls);
