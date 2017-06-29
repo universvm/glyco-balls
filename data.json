@@ -1,0 +1,127 @@
+[
+ {
+   "FIELD1": "Protein",
+   "FIELD2": "Concentration (mg/mL)",
+   "FIELD3": "Percentage"
+ },
+ {
+   "FIELD1": "Alpha-1-acid glycoprotein",
+   "FIELD2": "0.77",
+   "FIELD3": "2.634973975"
+ },
+ {
+   "FIELD1": "Alpha-1-antitrypsin",
+   "FIELD2": "1.1",
+   "FIELD3": "3.764248536"
+ },
+ {
+   "FIELD1": "Alpha-1B-glycoprotein",
+   "FIELD2": "0.22",
+   "FIELD3": "0.752908966"
+ },
+ {
+   "FIELD1": "Alpha-2-HS-glycoprotein",
+   "FIELD2": "0.45",
+   "FIELD3": "1.540041068"
+ },
+ {
+   "FIELD1": "Alpha-2-macrogobulin",
+   "FIELD2": "1.2",
+   "FIELD3": "4.106776181"
+ },
+ {
+   "FIELD1": "Antithrombin-III",
+   "FIELD2": "0.15",
+   "FIELD3": "0.513347023"
+ },
+ {
+   "FIELD1": "Apolipoprotein B-100",
+   "FIELD2": "0.5",
+   "FIELD3": "1.711156742"
+ },
+ {
+   "FIELD1": "Apolipoprotein D",
+   "FIELD2": "0.1",
+   "FIELD3": "0.342231348"
+ },
+ {
+   "FIELD1": "Apolipoprotein F",
+   "FIELD2": "0.0845",
+   "FIELD3": "0.289185489"
+ },
+ {
+   "FIELD1": "Beta-2-glycoprotein 1",
+   "FIELD2": "0.2",
+   "FIELD3": "0.684462697"
+ },
+ {
+   "FIELD1": "Ceruloplasmin",
+   "FIELD2": "0.355",
+   "FIELD3": "1.214921287"
+ },
+ {
+   "FIELD1": "Fibrinogen",
+   "FIELD2": "3",
+   "FIELD3": "10.26694045"
+ },
+ {
+   "FIELD1": "Haptoglobin",
+   "FIELD2": "1.32",
+   "FIELD3": "4.517453799"
+ },
+ {
+   "FIELD1": "Hemopexin",
+   "FIELD2": "0.8",
+   "FIELD3": "2.737850787"
+ },
+ {
+   "FIELD1": "Histdine-rich glycoprotein",
+   "FIELD2": "0.125",
+   "FIELD3": "0.427789185"
+ },
+ {
+   "FIELD1": "Kininogen-1",
+   "FIELD2": "0.0725",
+   "FIELD3": "0.248117728"
+ },
+ {
+   "FIELD1": "Serotransferrin",
+   "FIELD2": "2.5",
+   "FIELD3": "8.55578371"
+ },
+ {
+   "FIELD1": "Vitronectin",
+   "FIELD2": "0.3",
+   "FIELD3": "1.026694045"
+ },
+ {
+   "FIELD1": "Zinc-alpha-2-glycoprotein",
+   "FIELD2": "0.05",
+   "FIELD3": "0.171115674"
+ },
+ {
+   "FIELD1": "Immunoglobulin A",
+   "FIELD2": "2.62",
+   "FIELD3": "8.966461328"
+ },
+ {
+   "FIELD1": "Immunoglobulin D",
+   "FIELD2": "0.035",
+   "FIELD3": "0.119780972"
+ },
+ {
+   "FIELD1": "Immunoglobulin E",
+   "FIELD2": "0.0003",
+   "FIELD3": "0.001026694"
+ },
+ {
+   "FIELD1": "Immunoglobulin G",
+   "FIELD2": "11.8",
+   "FIELD3": "40.38329911"
+ },
+ {
+   "FIELD1": "Immunoglobulin M",
+   "FIELD2": "1.47",
+   "FIELD3": "5.030800821"
+ }
+]
