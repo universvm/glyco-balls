@@ -343,7 +343,6 @@
                     change(data1);
 
                  function change(data) {
-
                     /* ------- ANIMATE PIE SLICES -------*/
                     var slice = doughpie.select(".slices").selectAll("path.slice")
                         .data(pie(data), key);
@@ -377,7 +376,6 @@
 
 
                     // generate data with calculated layout values
-
                     var data = bubbledata(data);
 
                     var nodes = bubble.nodes(data)
@@ -466,10 +464,13 @@
                 }
 
                 function bubbledata(data) {
+                    debugger;
                     //loop through data -- and MERGE children
                     var childs = [];
                     $.each(data, function (index, value) {
-                        childs.push(value.children);
+                        console.log("hIE");
+                        console.log(value)
+                        childs.push(value);
                     });
                     var merged = [].concat.apply([], childs); //flatterns multidimensional array
 
