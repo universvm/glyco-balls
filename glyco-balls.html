@@ -38,7 +38,7 @@
                 return {
                     inputData: {
                         type: String,
-                        observer: "inputDataChanged"
+                        observer: "ciao"
                     }
 
                 };
@@ -92,7 +92,6 @@
 
                     //_create doughpie shell
                     var doughpie = svg.append("g")
-                        .attr("id", "doughpie")
                         .attr("class", "doughpie");
 
                     doughpie.append("g")
@@ -470,7 +469,7 @@
                     $.each(data, function (index, value) {
                         console.log("hIE");
                         console.log(value)
-                        childs.push(value);
+                        childs.push(value.children);
                     });
                     var merged = [].concat.apply([], childs); //flatterns multidimensional array
 
