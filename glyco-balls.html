@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../iron-ajax/iron-ajax.html">
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -13,14 +13,7 @@
                 display: block;
             }
         </style>
-        <iron-ajax
-        auto
-        url="data.json"
-        handle-as="json"
-        method="GET"
-        on-response="inputDataChanged"></iron-ajax>
 
-        <h2 id="graph">Glyco-Balls!</h2>
         <div data-role="doughpie" data-width="450" data-height="450" id="graph"></div>
     </template>
     <script>
@@ -36,16 +29,20 @@
             static get is() { return 'glyco-balls'; }
             static get properties() {
                 return {
-                    inputData: {
-                        type: String,
-                        observer: "ciao"
+
+                    selectedProtein: {
+                      type: String,
+                      referToAttribute: true,
+                      notify: true
                     }
 
                 };
             }
-            inputDataChanged(jsonData) {
-                var graph = this.$.graph;
 
+          connectedCallback() {
+              super.connectedCallback();
+                var graph = this.$.graph;
+                var that = this;
                 /*
                             var helloDiv = Polymer.dom(this.root).querySelector('.doughpie');
                             this.$.graph
@@ -137,10 +134,9 @@
                         })
                         .padding(3);
 
-                    //_create bubble
-                    //console.log(jsonData.detail.response);
-                    var data1 = jsonData.detail.response;
-                    var data13 = [{
+
+
+                    var data1 = [{
                         "label": "Alpha-1-acid glycoprotein",
                         "value": "0.77",
                         "children": [{
@@ -254,11 +250,11 @@
                             size: 0.8,
                         }]
                     }, {
-                        "label": "Histdine-rich glycoprotein",
+                        "label": "Histidine-rich glycoprotein",
                         "value": "0.125",
                         "children": [{
-                            name: "Description of Histdine-rich glycoprotein",
-                            group: "Histdine-rich glycoprotein",
+                            name: "Description of Histidine-rich glycoprotein",
+                            group: "Histidine-rich glycoprotein",
                             size: 0.125,
                         }]
                     }, {
@@ -270,11 +266,11 @@
                             size: 0.0725,
                         }]
                     }, {
-                        "label": "Seroransferrin",
+                        "label": "Serotransferrin",
                         "value": "2.5",
                         "children": [{
-                            name: "Description of Seroransferrin",
-                            group: "Seroransferrin",
+                            name: "Description of Serotransferrin",
+                            group: "Serotransferrin",
                             size: 2.5,
                         }]
                     }, {
@@ -350,8 +346,8 @@
                     slice.enter()
                         .insert("path")
                         .style("fill", function (d) {
-                            console.log(d.data.label);
-                            console.log(color(d.data.label));
+                            //console.log(d.data.label);
+                            //console.log(color(d.data.label));
                             return color(d.data.label); //colors
                         })
                         .attr("class", "slice");
@@ -379,11 +375,11 @@
 
                     var nodes = bubble.nodes(data)
                         .filter(function (d) {
-                            console.log(d.children);
+                      //      console.log(d.children);
                             return !d.children;
                         }); // filter out the outer bubble
 
-                    console.log("nodes", nodes);
+                    //console.log("nodes", nodes);
 
                     var bubbles = bubs.selectAll('circle')
                         .data(nodes);
@@ -401,14 +397,17 @@
                             return color(d.group);
                         })
                         .on("mouseover", function (d) {
-                            console.log(d);
-                            console.log(d.value);
+                            //console.log(d);
+                            //console.log(d.value);
 //                      current = d.value;
                             tooltip.text(d.group + ": " + d.value.toPrecision(2).toString() + " mg/ml");
                             tooltip.style("visibility", "visible");
                         })
                         .on("mousemove", function () {
                             return tooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
+                        })
+                        .on("click", function (d) {
+                          that.selectedProtein = d.group.replace(/ /g,"_");
                         })
                         .on("mouseout", function () {
                             return tooltip.style("visibility", "hidden");
@@ -442,7 +441,6 @@
                         .text(function (d) {
                             return d.group;
                         });
-                    console.log(legend);
 
                     bubbles = bubbles.transition()
                         .transition()
@@ -467,8 +465,7 @@
                     //loop through data -- and MERGE children
                     var childs = [];
                     $.each(data, function (index, value) {
-                        console.log("hIE");
-                        console.log(value)
+
                         childs.push(value.children);
                     });
                     var merged = [].concat.apply([], childs); //flatterns multidimensional array
